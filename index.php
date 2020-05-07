@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,6 +23,7 @@
     <link rel="stylesheet" href="css/slick.css">
     <link rel="stylesheet" href="css/slicknav.css">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <link rel="stylesheet" href="css/style.css">
     <!-- <link rel="stylesheet" href="css/responsive.css"> -->
@@ -30,6 +33,28 @@
             padding : 16px 22px;
             border : solid 2px #F91842;
             border-radius : 6px;
+        }
+        #select2{
+            width : 100%;
+            padding : 16px 22px;
+            border : solid 2px #F91842;
+            border-radius : 6px;
+            
+        }
+        .boxed-btn2{
+            margin : 20px;
+            margin-right : -250px;
+        }
+        #table_class{
+            padding : 40px;
+        }
+        #commande{
+            background-color : #F91842;
+            color : white;
+            padding : 8px 12px;
+            border : #F91842;
+            border-radius : 4px;
+            cursor : pointer;
         }
     </style>
 </head>
@@ -76,74 +101,43 @@
                             <p>Find Nearby Attraction</p>
                             <h3>Find Nearby Attraction</h3>
                             <div class="search_form">
-                                <form action="">
+                                <?php
+                                $connect = mysqli_connect("localhost", "root", "", "gestion_vols");
+                                if(isset($_POST['depart'], $_POST['arrive'])){
+                                    $searchkey = $_POST['depart'];
+                                    $searchkey1 = $_POST['arrive'];
+                                    $sql = "SELECT * FROM vol WHERE lieu_depart LIKE '%$searchkey%' AND lieu_arrive LIKE '%$searchkey1%' ";
+                                } else {
+                                    $sql = "SELECT * FROM vol";
+                                    $searchkey = "";
+                                    $searchkey1 = "";
+                                }
+                                // $sql = "SELECT * FROM vol";
+                                $result = mysqli_query($connect, $sql);
+                                ?>
+                                <form action="" method="POST">
+                                <center>
                                     <div class="row align-items-center">
-                                        <div class="col-xl-4 col-md-4">
-                                                <!-- <input type="text" placeholder="What are you finding?"> -->
-                                                <select id="select1">
+                                        <div class="col-xl-6 col-md-4">
+                                                <input type="text" value="<?php echo $searchkey; ?>" placeholder="Entrer votre lieu de départ" name="depart" id="select1">
+                                                <!-- <select id="select1" name="filter_depart">
                                                     <option value="">Selectionner votre départ</option>
-                                                    <?php
-                                                    $conn = mysqli_connect("localhost", "root", "", "gestion_vols");
-                                                    if($conn-> connect_error){
-                                                        die("connexion echoue :" . $conn-> connect_error);
-                                                    }
-                                                    $sql = "SELECT city_name FROM city";
-                                                    $result = $conn->query($sql);
-                                                    if($result-> num_rows > 0){
-                                                        while($row = $result->fetch_assoc()){
-                                                            echo"<option>" . $row["city_name"] . "</option>";
-                                                        }
-                                                    }
-                                                    ?>
-                                                </select>
+                                                </select> -->
                                         </div>
-                                        <div class="col-xl-4 col-md-4">
-                                            <select id="select1">
+                                        <div class="col-xl-6 col-md-4">
+                                            <input type="text" value="<?php echo $searchkey1; ?>" placeholder="Entrer votre lieu d'arrive" name="arrive" id="select2">
+                                            <!-- <select id="select2" name="filter_arrive">
                                                 <option value="">Selectionner votre arrivé</option>
-                                                <?php
-                                                    $conn = mysqli_connect("localhost", "root", "", "gestion_vols");
-                                                    if($conn-> connect_error){
-                                                        die("connexion echoue :" . $conn-> connect_error);
-                                                    }
-                                                    $sql = "SELECT city_name FROM city";
-                                                    $result = $conn->query($sql);
-                                                    if($result-> num_rows > 0){
-                                                        while($row = $result->fetch_assoc()){
-                                                            echo"<option>" . $row["city_name"] . "</option>";
-                                                        }
-                                                    }
-                                                    ?>
-                                            </select>
+                                            </select> -->
                                         </div>
                                         <div class="col-xl-4 col-md-4">
                                             <div class="button_search">
-                                                <button class="boxed-btn2" type="submit">Rechercher</button>
+                                                <button class="boxed-btn2" id="search">Rechercher</button>
                                             </div>
                                         </div>
                                     </div>
+                                    </center>
                                 </form>
-                            </div>
-                            <div class="quality">
-                                <ul>
-                                    <li>
-                                        <button>Hotel</button>
-                                    </li>
-                                    <li>
-                                        <button>Food</button>
-                                    </li>
-                                    <li>
-                                        <button>Shopping</button>
-                                    </li>
-                                    <li>
-                                        <button>Bar & Pubs</button>
-                                    </li>
-                                    <li>
-                                        <button>Bar & Pubs</button>
-                                    </li>
-                                    <li>
-                                        <button>Places</button>
-                                    </li>
-                                </ul>
                             </div>
                         </div>
                     </div>
@@ -152,6 +146,29 @@
         </div>
     </div>
     <!-- slider_area_end -->
+
+    <div id="table_class" class="container">
+        <table id="data" class="table table-bordered">
+                <tr>
+                    <th width="10%">Numero de vol</th>
+                    <th width="10%">Lieu Depart</th>
+                    <th width="10%">Lieu Arrive</th>
+                    <th width="10%">Date Depart</th>
+                    <th width="10%">Date Arrive</th>
+                    <th width="10%">Action</th>
+                </tr>
+                <?php while($row = mysqli_fetch_object($result)){ ?>
+                <tr>
+                    <td><?php echo $row->num_vol ?></td>
+                    <td><?php echo $row->lieu_depart ?></td>
+                    <td><?php echo $row->lieu_arrive ?></td>
+                    <td><?php echo $row->date_depart ?></td>
+                    <td><?php echo $row->date_arrive ?></td>
+                    <td><button id="commande">Commander</button></td>
+                </tr>
+                <?php } ?>
+        </table>
+    </div>
 
     <div class="popular_catagory_area">
         <div class="container">
@@ -1088,6 +1105,11 @@
     <script src="js/plugins.js"></script>
     <!-- <script src="js/gijgo.min.js"></script> -->
     <script src="js/slick.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            
+        });
+    </script>
 
 </body>
 </html>
