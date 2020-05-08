@@ -56,6 +56,11 @@
             border-radius : 4px;
             cursor : pointer;
         }
+        #number{
+            padding : 6px 12px;
+            border-radius : 6px;
+            border-color : #F91842;;
+        }
     </style>
 </head>
 <body>
@@ -155,6 +160,8 @@
                     <th width="10%">Lieu Arrive</th>
                     <th width="10%">Date Depart</th>
                     <th width="10%">Date Arrive</th>
+                    <th width="10%">Prix (DH)</th>
+                    <th width="10%">Nombre des places</th>
                     <th width="10%">Action</th>
                 </tr>
                 <?php while($row = mysqli_fetch_object($result)){ ?>
@@ -164,6 +171,8 @@
                     <td><?php echo $row->lieu_arrive ?></td>
                     <td><?php echo $row->date_depart ?></td>
                     <td><?php echo $row->date_arrive ?></td>
+                    <td><?php echo $row->prix ?>DH</td>
+                    <td><input id="number" type="number" min="1" max="<?php echo $row->nom_places ?>"/></td>
                     <td><button id="commande">Commander</button></td>
                 </tr>
                 <?php } ?>
