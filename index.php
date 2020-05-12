@@ -105,7 +105,7 @@
                         <div class="slider_text text-center justify-content-center">
                             <p>Trouvez votre meilleur vol</p>
                             <h3>Trouvez votre meilleur vol</h3>
-                            <div class="search_form">
+                            <!-- <div class="search_form"> -->
                                 <?php
                                 $connect = mysqli_connect("localhost", "root", "", "gestion_vols");
                                 if(isset($_POST['depart'], $_POST['arrive'])){
@@ -143,7 +143,7 @@
                                     </div>
                                     </center>
                                 </form>
-                            </div>
+                            <!-- </div> -->
                         </div>
                     </div>
                 </div>
