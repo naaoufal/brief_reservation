@@ -154,6 +154,7 @@
 
     <div id="table_class" class="container">
         <table id="data" class="table table-bordered">
+            <form action="page2.php" method="POST"></form>
                 <tr>
                     <th width="10%">Numero de vol</th>
                     <th width="10%">Lieu Depart</th>
@@ -166,16 +167,17 @@
                 </tr>
                 <?php while($row = mysqli_fetch_object($result)){ ?>
                 <tr>
-                    <td><?php echo $row->num_vol ?></td>
+                    <td><?php echo $row->id ?></td>
                     <td><?php echo $row->lieu_depart ?></td>
                     <td><?php echo $row->lieu_arrive ?></td>
                     <td><?php echo $row->date_depart ?></td>
                     <td><?php echo $row->date_arrive ?></td>
                     <td><?php echo $row->prix ?>DH</td>
                     <td><?php echo $row->nom_places ?></td>
-                    <td><button id="commande">Commander</button></td>
+                    <td><a href="page2.php?id=<?php echo $row->id ?>"><button id="commande">Commander</button><a/></td>
                 </tr>
                 <?php } ?>
+            </form>
         </table>
     </div>
 
