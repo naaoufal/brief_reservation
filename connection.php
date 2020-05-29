@@ -1,6 +1,6 @@
 <?php
 
-$conn = mysqli_connect("localhost", "root", "", "gestion_vols");
+$conn = mysqli_connect("localhost", "root", "", "gestion_vols2");
 
 if(mysqli_connect_errno()){
   

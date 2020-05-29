@@ -57,9 +57,10 @@
     <h3>vol selecionnée</h3>
 
     <?php
-    $connect = new Mysqli("localhost", "root", "", "gestion_vols");
+    $connect = mysqli_connect("localhost", "root", "", "gestion_vols");
     $sql = "SELECT * FROM vol WHERE id =".$_GET['id'];
-    $result = mysqli_query($connect, $sql);
+    $result = $connect->query('SELECT * FROM vol WHERE id ='.$_GET['id']);
+    $vol = $result->fetch_assoc();
     
     ?>
 
@@ -75,30 +76,72 @@
                     <th width="10%">Prix (DH)</th>
                     <th width="10%">Nombre des places</th>
                 </tr>
-                <?php while($row = mysqli_fetch_object($result)){ ?>
+                <?php //while($row = mysqli_fetch_object($result)){ ?>
                 <tr>
-                    <td><?php echo $row->id ?></td>
-                    <td><?php echo $row->lieu_depart ?></td>
-                    <td><?php echo $row->lieu_arrive ?></td>
-                    <td><?php echo $row->date_depart ?></td>
-                    <td><?php echo $row->date_arrive ?></td>
-                    <td><?php echo $row->prix ?>DH</td>
-                    <td><?php echo $row->nom_places ?></td>
+                    <td><?php print $vol['id'] ?></td>
+                    <td><?php print $vol['lieu_depart'] ?></td>
+                    <td><?php print $vol['lieu_arrive'] ?></td>
+                    <td><?php print $vol['date_depart'] ?></td>
+                    <td><?php print $vol['date_arrive'] ?></td>
+                    <td><?php print $vol['prix'] ?>DH</td>
+                    <td><?php print $vol['nom_places'] ?></td>
                 </tr>
-                <?php } ?>
+                <?php //} ?>
         </table>
-    <form action="insert.php" method="POST">
+        <form action="insert.php" method="POST">
         <div class="half">
-         Nom :  <input name="Nom" type="text" placeholder="Entrer votre nom"><br>
-         Prenom : <input name="Prenom" type="text" placeholder="Entrer votre prenom"><br>
-         Address : <input name="Address" type="text" placeholder="Entrer votre address"><br>
-         CodePostal : <input name="CodePostal" type="text" placeholder="Entrer votre codepostal"><br>
-         Ville : <input name="Ville" type="text" placeholder="Entrer votre ville"><br>
-         Numero Passport : <input name="NumeroPassport" type="text" placeholder="Entrer numero passport"><br>
-         Nombre des places à reservées : <input name="Numplaces" type="text" placeholder="Entrer le nombres des places reservees"><br>
+         Nom :  <input name="nom" class="form-control" type="text" placeholder="Entrer votre nom"><br>
+         Prenom : <input name="prenom" class="form-control" type="text" placeholder="Entrer votre prenom"><br>
+         Address : <input name="address" class="form-control" type="text" placeholder="Entrer votre address"><br>
+         CodePostal : <input name="codePostal" class="form-control" type="text" placeholder="Entrer votre codepostal"><br>
+         Ville : <input name="ville" class="form-control" type="text" placeholder="Entrer votre ville"><br>
+         Numero Passport : <input name="numeroPassport" class="form-control" type="text" placeholder="Entrer numero passport"><br>
         </div>
-        <a href="insert.php?id=<?php echo $row->id ?>"><input type="submit" value="Confirmer votre commande" name="submit"></a>
-    </form>
+        <div>
+            <input type="hidden" name="id" value="<?php print $vol['id'] ?>">
+            <input type="submit" value="Confirmer votre commande" name="submit1">
+        </div>
+        </form>
+    <?php
+        // session_start();
+
+        // $id=$_POST['id'];
+
+        // $dbconnect = mysqli_connect('localhost', 'root', '', 'gestion_vols');
+
+
+        // if(isset($_POST["submit1"])){
+        //     $name = $_POST['nom'];
+        //     $prenom = $_POST['prenom'];
+        //     $address = $_POST['address'];
+        //     $codepostal = $_POST['codePostal'];
+        //     $ville = $_POST['ville'];
+        //     $num_passport = $_POST['numeroPassport'];
+        
+        //     $sql2 = "INSERT INTO client(nom, prenom, address, codePostal, ville, numeroPassport) VALUES('$name', '$prenom', '$address', '$codepostal', '$ville', '$num_passport')";
+
+        //     $run = mysqli_query($dbconnect, $sql2);
+        //         if($run){
+        //             echo "Les informations inserees";
+        //             // header('location: reservation.php');
+        //         }else{
+        //             "il y a un probleme";
+        //         }
+        //     // $id_client = $_GET['CodeClient'];
+        //     // $id_vol = $vol['id'];
+        //     $row1=mysqli_insert_id($dbconnect);
+        //     $id=$_SESSION['vol'];
+        //     $query2 = "INSERT INTO reservation(Id_client,Id_vol,DateReservation) VALUES('$row1','$id',NOW())";
+        //     $run2=mysqli_query($dbconnect,$query2);
+        //     if($run2){
+        //         echo "tous est bien";
+        //         header('location:reservation.php');
+        //     } else {
+        //         echo "il y a une erruer";
+        //     }
+        // }
+
+    ?>
     </div>
 </div>
     </center>
