@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -174,7 +172,7 @@
                     <td><?php echo $row->date_arrive ?></td>
                     <td><?php echo $row->prix ?>DH</td>
                     <td><?php echo $row->nom_places ?></td>
-                    <td><a href="page2.php?id=<?php echo $row->id ?>"><button id="commande">Commander</button><a/></td>
+                    <td><a href="page2.php?id=<?php echo $row->id ?>"><button id="commande">Commander</button></a></td>
                 </tr>
                 <?php } ?>
             </form>

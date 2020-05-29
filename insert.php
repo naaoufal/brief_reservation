@@ -54,6 +54,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    
         <!-- footer start -->
         <footer class="footer">
         <div class="footer_top">

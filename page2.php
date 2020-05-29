@@ -97,7 +97,7 @@
          Numero Passport : <input name="NumeroPassport" type="text" placeholder="Entrer numero passport"><br>
          Nombre des places à reservées : <input name="Numplaces" type="text" placeholder="Entrer le nombres des places reservees"><br>
         </div>
-        <input type="submit" value="Confirmer votre commande" name="submit">
+        <a href="insert.php?id=<?php echo $row->id ?>"><input type="submit" value="Confirmer votre commande" name="submit"></a>
     </form>
     </div>
 </div>
